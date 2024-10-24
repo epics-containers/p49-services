@@ -1,0 +1,16 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: rabbitmq-password
+  namespace: p49-beamline
+spec:
+  encryptedData:
+    rabbitmq-password: AgB9sXmfHKeqNmRqiu9775bcjHV6PxJRgwPaAsvY2IT0a6sP61V987nebkijau2dxff+Rj2jVvBJc8kwmO9lwG1XzEQcO0UH5HNxTASNy+6oFkLqGBb3al/v3LvInx4iV0OjlPo4f12ZdfrzEsRP/KClyByB4TU6UcsVEtljfxVJeG2PW0dKfQdDdqGxbzCup9l35sXCGOT5p2WERnKp4HyuBV/2Kvno/yLCBZEJDeX85tJIo3fP4u4j+5n+3hWudFGkIxsbbxqCLo5kaFxIZerYxyiJQ/edb2ZFAZ+pkUXOFPDx0hnerT21VvXM70mn74r3/XdQNd8ndcX+JBALjEwO20xG7unFy0h6dL9lYRuDbagLuHO2Ec3uWQb4tX8lrDH1tOTcYdGv7+XoZZDiRHe1irPhObjpphqcLDOSVU0iUs079qVqzhT2z3d07nTG8bi7hVFhrHuaDsfo251xiz/H3SYeYDLNegOYsfKtyQoO5295AKEN1LFitd27bfdVC3LkuI/ZQZppNTObLcLGLT+3zPhf7E5R6A7UehDOYVnkjGf4bT4BGCD3MtUPWztFk94VpRsjqcfxMA4xXGJSnNR/lGCEsPjnhb4M1sS5d+n09X0ZOnxh6Y3Qawzq1pfwQcZkTR/DeSZmRVu3uTH0lvYngfokGetURW3lBosrHI6iM0eMYlHbTzyw/k1wqXvMx4FjtYA=
+  template:
+    data: null
+    metadata:
+      creationTimestamp: null
+      name: rabbitmq-password
+      namespace: p49-beamline
+
