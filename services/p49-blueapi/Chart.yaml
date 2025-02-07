@@ -1,9 +1,8 @@
 apiVersion: v2
-name: daq-blueapi
-description: blueapi
+name: p49-blueapi
+description: blueapi deployed for p49 with authentication and tracing
 
-version: 0.6.0
-
+version: 0.7.2
 # When we deploy with the edge-containers-cli we override this on the command line.
 # Direct deployment with Helm will use the default beta value.
 appVersion: 0.0.1b1
@@ -12,5 +11,5 @@ type: application
 
 dependencies:
   - name: blueapi
-    version: "0.6.0"
+    version: "0.7.2"
     repository: "oci://ghcr.io/diamondlightsource/charts"
