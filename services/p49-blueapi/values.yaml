@@ -24,34 +24,46 @@ blueapi:
   extraEnvVars:
     - name: BEAMLINE
       value: p49
-
     - name: RABBITMQ_PASSWORD
       valueFrom:
         secretKeyRef:
           name: rabbitmq-password
           key: rabbitmq-password
+  tracing:
+    otlp:
+      enabled: true
+      server:
+        host: http://jaeger-all-in-one.p46-beamline.svc.cluster.local
   worker:
     env:
       sources:
       - kind: dodal
         module: dodal.beamlines.training_rig
-        # TODO: Make training rig plans repository
       - kind: planFunctions
-        module: blueapi.startup
+        module: htss_rig_bluesky.plans
+      - kind: planFunctions
+        module: dodal.plans
+      - kind: planFunctions
+        module: ophyd_async.plan_stubs
       events:
         broadcast_status_events: False
     stomp:
       auth:
         username: p49
         password: ${RABBITMQ_PASSWORD}
-      host: daq-rabbitmq
+      host: p49-rabbitmq
+    oidc:
+      well_known_url: "https://authn.diamond.ac.uk/realms/master/.well-known/openid-configuration"
+      client_id: "blueapi-cli"
     scratch:
-      root: /exports/mybeamline/p49/scratch/blueapi
+      root: /dls_sw/htss/p49/scratch
   
   initContainer:
     scratch:
-      root: /exports/mybeamline/p49/scratch/blueapi
+      root: /dls_sw/htss/p49/scratch
       repositories:
         - name: dodal
           remote_url: https://github.com/DiamondLightSource/dodal.git
-  scratchHostPath: /exports/mybeamline/p49/scratch/blueapi
+        - name: htss-rig-bluesky
+          remote_url: https://github.com/DiamondLightSource/htss-rig-bluesky.git
+  scratchHostPath: /dls_sw/htss/p49/scratch
