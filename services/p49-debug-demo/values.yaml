@@ -3,12 +3,12 @@ image: ghcr.io/diamondlightsource/python-copier-template-example:0.5.4
 hostNetwork: false
 
 # 37889 is p49-detector
-# securityContext:
-#   runAsUser: 37889
-#   runAsGroup: 37889
 securityContext:
-  runAsUser: 0
-  runAsGroup: 0
+  runAsUser: 37889
+  runAsGroup: 37889
+# securityContext:
+#   runAsUser: 0
+#   runAsGroup: 0
 
 resources:
   limits:
