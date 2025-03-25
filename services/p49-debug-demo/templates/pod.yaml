@@ -1,0 +1,75 @@
+{{- /*
+This creates a pod to demonstrate debugging and testing python in cluster
+*/ -}}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    app: {{ .Release.Name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      {{- if .Values.serviceAccountName }}
+      serviceAccountName: {{ .Values.serviceAccountName | quote }}
+      {{- end }}
+      hostNetwork: {{ .Values.hostNetwork | default false}}
+      terminationGracePeriodSeconds: 3 # nice to have quick restarts on IOCs
+      volumes:
+        - name: demo-volume
+          persistentVolumeClaim:
+            claimName: demo-volume-pvc
+        {{- if .Values.volumes }}
+{{  toYaml .Values.volumes | indent 8}}
+        {{- end }}
+      containers:
+      - name: {{ .Release.Name }}
+        image: {{ .Values.image }}
+        command:
+          - sleep
+        args:
+          - infinity
+        volumeMounts:
+        - name: demo-volume
+          mountPath: /demo-volume
+        {{- if .Values.volumeMounts }}
+{{  toYaml .Values.volumeMounts | indent 8}}
+        {{- end }}
+        stdin: true
+        tty: true
+        {{- if .Values.securityContext }}
+        securityContext:
+{{  toYaml .Values.securityContext | indent 10}}
+        {{- if .Values.resources }}
+        {{- end }}
+        resources:
+{{  toYaml .Values.resources | indent 10}}
+        {{- end }}
+        imagePullPolicy: Always
+        env:
+        - name: NAME
+          value: {{ .Release.Name }}
+        {{- if .Values.globalEnv }}
+{{  toYaml .Values.globalEnv | indent 8}}
+        {{- end }}
+        {{- if .Values.iocEnv }}
+{{  toYaml .Values.iocEnv | indent 8}}
+        {{- end }}
+      {{- if .Values.nodeName }}
+      nodeName: {{ .Values.nodeName }}
+      {{- else if .Values.affinity }}
+      affinity:
+{{  toYaml .Values.affinity | indent 8}}
+      {{- end }}
+      {{- if .Values.tolerations }}
+      tolerations:
+{{  toYaml .Values.tolerations | indent 8}}
+      {{- end }}

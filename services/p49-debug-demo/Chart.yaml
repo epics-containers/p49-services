@@ -1,0 +1,5 @@
+# A Helm Chart for an IOC instance
+apiVersion: v2
+name: debug-test
+
+version: 1.0.0
