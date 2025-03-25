@@ -6,9 +6,9 @@ hostNetwork: false
 # securityContext:
 #   runAsUser: 37889
 #   runAsGroup: 37889
-securityContext:
-  runAsUser: 0
-  runAsGroup: 0
+# securityContext:
+#   runAsUser: 0
+#   runAsGroup: 0
 
 resources:
   limits:
