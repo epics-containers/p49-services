@@ -61,4 +61,6 @@ blueapi:
           remote_url: https://github.com/DiamondLightSource/dodal.git
         - name: htss-rig-bluesky
           remote_url: https://github.com/DiamondLightSource/htss-rig-bluesky.git
+        - name: ophyd-async
+          remote_url: https://github.com/bluesky/ophyd-async.git
   scratchHostPath: /dls_sw/htss/p49/scratch
