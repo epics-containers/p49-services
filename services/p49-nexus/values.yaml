@@ -19,6 +19,9 @@ nexus-file-converter:
       path: /exports/mybeamline/p49/data/
       type: DirectoryOrCreate
 
+  nodeSelector:
+    kubernetes.io/hostname: bl49p-ea-serv-01.diamond.ac.uk
+
   volumeMounts:
   - name: nexus-data
     mountPath: /exports/mybeamline/p49/data/
