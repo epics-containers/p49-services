@@ -22,6 +22,16 @@ nexus-file-converter:
   nodeSelector:
     kubernetes.io/hostname: bl49p-ea-serv-01.diamond.ac.uk
 
+  tolerations:
+    - key: nodetype
+      operator: Equal
+      value: training-rig
+      effect: NoSchedule
+    - key: beamline
+      operator: Equal
+      value: bl49p
+      effect: NoSchedule
+
   volumeMounts:
   - name: nexus-data
     mountPath: /exports/mybeamline/p49/data/
