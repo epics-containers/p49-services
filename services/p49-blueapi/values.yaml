@@ -19,8 +19,12 @@ blueapi:
       value: bl49p
       effect: NoSchedule
   ingress:
-    create: true
-    host: p49-blueapi.diamond.ac.uk
+    enabled: true
+    hosts:
+      - host: p49-blueapi.diamond.ac.uk
+        paths:
+          - path: /
+            pathType: Prefix
   extraEnvVars:
     - name: BEAMLINE
       value: p49
@@ -28,9 +32,11 @@ blueapi:
     otlp:
       enabled: true
       server:
-        host: http://pxx-jaeger.p46-beamline.svc.cluster.local
+        host: http://opentelemetry-collector.tracing
   worker:
     env:
+      metadata:
+        instrument: p49
       sources:
       - kind: dodal
         module: dodal.beamlines.training_rig
@@ -49,10 +55,7 @@ blueapi:
         username: guest
         password: guest
       host: p49-rabbitmq
-    scratch:
-      root: /dls_sw/htss/p49/scratch
-  
-  initContainer:
+      enabled: true
     scratch:
       root: /dls_sw/htss/p49/scratch
       repositories:
@@ -64,4 +67,12 @@ blueapi:
           remote_url: https://github.com/DiamondLightSource/imaging-bluesky.git
         - name: ophyd-async
           remote_url: https://github.com/bluesky/ophyd-async.git
-  scratchHostPath: /dls_sw/htss/p49/scratch
+    logging:
+      level: "INFO"
+      graylog:
+        enabled: true
+        url: http://graylog-log-target.diamond.ac.uk:12231/
+  initContainer:
+    enabled: true
+    persistentVolume:
+      enabled: false
