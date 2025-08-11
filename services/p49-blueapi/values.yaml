@@ -38,6 +38,10 @@ blueapi:
         module: htss_rig_bluesky.plans
       - kind: planFunctions
         module: dodal.plans
+      - kind: dodal
+        module: imaging.p49.devices
+      - kind: planFunctions
+        module: imaging.p49.plans
       events:
         broadcast_status_events: False
     stomp:
@@ -56,6 +60,8 @@ blueapi:
           remote_url: https://github.com/DiamondLightSource/dodal.git
         - name: htss-rig-bluesky
           remote_url: https://github.com/DiamondLightSource/htss-rig-bluesky.git
+        - name: imaging-bluesky
+          remote_url: https://github.com/DiamondLightSource/imaging-bluesky.git
         - name: ophyd-async
           remote_url: https://github.com/bluesky/ophyd-async.git
   scratchHostPath: /dls_sw/htss/p49/scratch
