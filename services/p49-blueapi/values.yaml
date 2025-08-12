@@ -56,7 +56,6 @@ blueapi:
       auth:
         username: guest
         password: guest
-      host: p49-rabbitmq
       url: tcp://p49-rabbitmq-daq.diamond.ac.uk:61613
       enabled: true
     scratch:
@@ -74,7 +73,6 @@ blueapi:
       level: "INFO"
       graylog:
         enabled: true
-        url: http://graylog-log-target.diamond.ac.uk:12231/
   initContainer:
     enabled: true
     persistentVolume:
