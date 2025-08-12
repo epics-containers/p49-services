@@ -36,6 +36,8 @@ blueapi:
       server:
         host: http://opentelemetry-collector.tracing
   worker:
+    api:
+      url: http://0.0.0.0:8050/
     env:
       metadata:
         instrument: p49
