@@ -1,5 +1,7 @@
 blueapi:
-  hostNetwork: false
+  securityContext:
+    runAsUser: 36098
+  hostNetwork: true
   resources:
     limits:
       cpu: 1000m
