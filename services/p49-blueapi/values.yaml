@@ -45,9 +45,9 @@ blueapi:
       - kind: planFunctions
         module: dodal.plans
       - kind: dodal
-        module: imaging-bluesky.p49.devices
+        module: imaging_bluesky.p49.devices
       - kind: planFunctions
-        module: imaging-bluesky.p49.plans
+        module: imaging_bluesky.p49.plans
       events:
         broadcast_status_events: False
     stomp:
