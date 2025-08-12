@@ -57,6 +57,7 @@ blueapi:
         username: guest
         password: guest
       host: p49-rabbitmq
+      url: tcp://p49-rabbitmq-daq.diamond.ac.uk:61613
       enabled: true
     scratch:
       root: /dls_sw/htss/p49/scratch
