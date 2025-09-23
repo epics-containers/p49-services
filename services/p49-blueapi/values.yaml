@@ -67,6 +67,7 @@ blueapi:
       root: /dls_sw/htss/p49/scratch
   
   initContainer:
+    enabled: true
     scratch:
       root: /dls_sw/htss/p49/scratch
       repositories:
