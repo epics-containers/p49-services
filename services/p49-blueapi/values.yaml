@@ -58,8 +58,14 @@ blueapi:
       auth:
         username: guest
         password: guest
-      url: tcp://p49-rabbitmq-daq.diamond.ac.uk:61613
-      enabled: true
+      host: p49-rabbitmq
+    oidc:
+      well_known_url: "https://authn.diamond.ac.uk/realms/master/.well-known/openid-configuration"
+      client_id: "blueapi-cli"
+    scratch:
+      root: /dls_sw/htss/p49/scratch
+  
+  initContainer:
     scratch:
       root: /dls_sw/htss/p49/scratch
       repositories:
@@ -75,7 +81,5 @@ blueapi:
       level: "INFO"
       graylog:
         enabled: true
-  initContainer:
-    enabled: true
     persistentVolume:
       enabled: false
