@@ -36,18 +36,17 @@ do
         continue
     fi
 
-    schema=$(cat ${service}/values.yaml | sed -rn 's/^# yaml-language-server: \$schema=(.*)/\1/p')
-    if [ -n "${schema}" ]; then
-        echo "{\"\$ref\": \"$schema\"}" > ${service}/values.schema.json
-    fi
-
+    echo "Validating helm chart for ${service_name}"
     $docker run --rm --entrypoint bash \
         -v ${ROOT}/.ci_work:/services:z \
         -v ${ROOT}/.helm-shared:/.helm-shared:z \
         alpine/helm:3.14.3 \
         -c "
-           helm lint /services/$service_name --values /services/values.yaml &&
            helm dependency update /services/$service_name &&
+           helm template /services/$service_name --values /services/values.yaml \\
+             --values /services/$service_name/values.yaml &&
+           helm lint /services/$service_name --values /services/values.yaml \\
+             --values /services/$service_name/values.yaml &&
            rm -rf /services/$service_name/charts
         "
 
