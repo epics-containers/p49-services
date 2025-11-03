@@ -1,14 +1,17 @@
 blueapi:
   hostNetwork: false
-  resources:
-    limits:
-      cpu: 1000m
-      memory: 500Mi
-    requests:
-      cpu: 500m
-      memory: 100Mi
+  securityContext:
+    runAsUser: 36098  # k8s-p49-beamline
+  ingress:
+    enabled: true
+    hosts:
+      - host: p49-blueapi.diamond.ac.uk
+        paths:
+          - path: /
+            pathType: Prefix
+
   nodeSelector:
-    kubernetes.io/hostname: bl49p-ea-serv-01.diamond.ac.uk
+    kubernetes.io/hostname: bl48p-ea-serv-01.diamond.ac.uk
   tolerations:
     - key: nodetype
       operator: Equal
@@ -16,43 +19,34 @@ blueapi:
       effect: NoSchedule
     - key: beamline
       operator: Equal
-      value: bl49p
+      value: bl48p
       effect: NoSchedule
-  ingress:
-    create: true
-    host: p49-blueapi.diamond.ac.uk
+
   extraEnvVars:
     - name: BEAMLINE
       value: p49
-  tracing:
-    otlp:
-      enabled: true
-      server:
-        host: http://pxx-jaeger.p46-beamline.svc.cluster.local
+    - name: INSTRUMENT
+      value: p49
+
   worker:
     env:
+      metadata:
+        instrument: p49
       sources:
       - kind: dodal
         module: dodal.beamlines.training_rig
       - kind: planFunctions
-        module: htss_rig_bluesky.plans
-      - kind: planFunctions
         module: dodal.plans
-      - kind: dodal
-        module: imaging-bluesky.p49.devices
-      - kind: planFunctions
-        module: imaging-bluesky.p49.plans
       events:
-        broadcast_status_events: False
+        broadcast_status_events: false
     stomp:
       auth:
         username: guest
         password: guest
-      host: p49-rabbitmq
-    scratch:
-      root: /dls_sw/htss/p49/scratch
-  
-  initContainer:
+      url: tcp://p49-rabbitmq-daq.diamond.ac.uk
+    oidc:
+      well_known_url: "https://authn.diamond.ac.uk/realms/master/.well-known/openid-configuration"
+      client_id: "blueapi-cli"
     scratch:
       root: /dls_sw/htss/p49/scratch
       repositories:
@@ -60,8 +54,11 @@ blueapi:
           remote_url: https://github.com/DiamondLightSource/dodal.git
         - name: htss-rig-bluesky
           remote_url: https://github.com/DiamondLightSource/htss-rig-bluesky.git
-        - name: imaging-bluesky
-          remote_url: https://github.com/DiamondLightSource/imaging-bluesky.git
-        - name: ophyd-async
-          remote_url: https://github.com/bluesky/ophyd-async.git
-  scratchHostPath: /dls_sw/htss/p49/scratch
+
+    logging:
+      level: "INFO"
+      graylog:
+        enabled: true
+
+  initContainer:
+    enabled: true

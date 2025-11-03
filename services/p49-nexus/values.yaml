@@ -1,4 +1,7 @@
 nexus-file-converter:
+  debug:
+    enabled: false
+    suspend: false
   beamline: p49
   template:
     entry/:
@@ -8,36 +11,15 @@ nexus-file-converter:
         name: p49
 
   volumes:
-  - name: nexus-template
-    configMap:
-      name: nexus-template
-      items:
-      - key: template.yaml
-        path: template.yaml
   - name: nexus-data
     hostPath:
       path: /exports/mybeamline/p49/data/
       type: DirectoryOrCreate
 
-  nodeSelector:
-    kubernetes.io/hostname: bl49p-ea-serv-01.diamond.ac.uk
-
-  tolerations:
-    - key: nodetype
-      operator: Equal
-      value: training-rig
-      effect: NoSchedule
-    - key: beamline
-      operator: Equal
-      value: bl49p
-      effect: NoSchedule
-
   volumeMounts:
   - name: nexus-data
     mountPath: /exports/mybeamline/p49/data/
     mountPropagation: HostToContainer
-  - name: nexus-template
-    mountPath: /templates
 
   application:
     server:
@@ -61,5 +43,5 @@ nexus-file-converter:
             sample_stage.x: NX_POSITIONER
             sample_stage.theta: NX_POSITIONER
   securityContext:
-    runAsUser: 37889 # p49-detector
+    runAsUser: 37889  # p49detector
     runAsGroup: 37889
