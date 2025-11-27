@@ -33,10 +33,9 @@ nexus-file-converter:
         password: guest
     files:
       output:
-        
         directory:
-          staticDirectory: ""  # explicitly empty, get from StartDocument metadata
-        
+          staticDirectory: /exports/mybeamline/p49/data/2024/cm11111-1
+        nameTemplate: <DATA_SESSION>
         devices:
           types:
             det: NX_DETECTOR
