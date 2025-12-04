@@ -69,6 +69,7 @@ blueapi:
 
 oauth2:
   config:
+    existingSecret: blueapi-secret
     configFile: |-
       skip_provider_button = true
       skip_jwt_bearer_tokens = true
