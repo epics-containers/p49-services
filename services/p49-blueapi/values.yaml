@@ -8,18 +8,6 @@ blueapi:
           - path: /
             pathType: Prefix
 
-  nodeSelector:
-    kubernetes.io/hostname: bl48p-ea-serv-01.diamond.ac.uk
-  tolerations:
-    - key: nodetype
-      operator: Equal
-      value: training-rig
-      effect: NoSchedule
-    - key: beamline
-      operator: Equal
-      value: bl48p
-      effect: NoSchedule
-
   extraEnvVars:
     - name: BEAMLINE
       value: p49
