@@ -68,18 +68,6 @@ blueapi:
 
 
 oauth2:
-  proxyVarsAsSecrets: false
-  extraEnv:
-    - name: OAUTH2_PROXY_CLIENT_SECRET
-      valueFrom:
-        secretKeyRef:
-          name: blueapi-secret
-          key: client-secret
-    - name: OAUTH2_PROXY_COOKIE_SECRET
-      valueFrom:
-        secretKeyRef:
-          name: blueapi-secret
-          key: cookie-secret
   config:
     configFile: |-
       skip_provider_button = true
@@ -112,7 +100,7 @@ oauth2:
       providers:
         - provider: oidc
           id: authn.diamond.ac.uk
-          clientID: p49-blueapi
+          clientID: ${OAUTH2_PROXY_CLIENT_ID}
           clientSecret: ${OAUTH2_PROXY_CLIENT_SECRET}
           oidcConfig:
             insecureAllowUnverifiedEmail: true
