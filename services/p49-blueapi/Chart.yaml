@@ -10,7 +10,7 @@ type: application
 
 dependencies:
   - name: blueapi
-    version: "init-container-security-context"
+    version: "1.11.3-a1"
     repository: "oci://ghcr.io/diamondlightsource/charts"
 
   - name: oauth2-proxy
