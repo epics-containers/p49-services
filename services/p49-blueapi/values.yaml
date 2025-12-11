@@ -65,6 +65,7 @@ blueapi:
     enabled: true
     persistentVolume:
       enabled: true
+      existingClaimName: p48-blueapi-my-volume
 
 
 oauth2:
