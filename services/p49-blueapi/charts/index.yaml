@@ -1,0 +1,59 @@
+apiVersion: v1
+entries:
+  blueapi:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2025-12-16T11:48:02.645917982Z"
+    description: A Helm chart deploying a worker pod that runs Bluesky plans
+    digest: 5eb4ab0ac3deaf570af429910285c13ef5bdebcfcf8463ae748cdc30770d43db
+    home: https://github.com/DiamondLightSource/blueapi
+    name: blueapi
+    type: application
+    urls:
+    - blueapi-0.1.0.tgz
+    version: 0.1.0
+  oauth2-proxy:
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: added
+          description: Add support for new container resize policy feature
+          links:
+            - name: Github PR
+              url: https://github.com/oauth2-proxy/manifests/pull/346
+    apiVersion: v2
+    appVersion: 7.12.0
+    created: "2025-12-16T11:48:02.650316936Z"
+    dependencies:
+    - alias: redis
+      condition: redis.enabled
+      name: redis-ha
+      repository: https://dandydeveloper.github.io/charts
+      version: 4.34.10
+    description: A reverse proxy that provides authentication with Google, Github
+      or other providers
+    digest: 473840c9d2454499c1516f1e8fc25aff7bb224eb4469e24b3bb987678ce15aae
+    home: https://oauth2-proxy.github.io/oauth2-proxy/
+    keywords:
+    - kubernetes
+    - oauth
+    - oauth2
+    - authentication
+    - google
+    - github
+    - redis
+    kubeVersion: '>=1.16.0-0'
+    maintainers:
+    - email: pierluigi.lenoci@gmail.com
+      name: pierluigilenoci
+    - email: jan@larwig.com
+      name: tuunit
+    - email: joel.speed@hotmail.co.uk
+      name: JoelSpeed
+    name: oauth2-proxy
+    sources:
+    - https://github.com/oauth2-proxy/oauth2-proxy
+    - https://github.com/oauth2-proxy/manifests
+    urls:
+    - oauth2-proxy-8.2.1.tgz
+    version: 8.2.1
+generated: "2025-12-16T11:48:02.636624454Z"
