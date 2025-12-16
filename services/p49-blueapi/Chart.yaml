@@ -11,7 +11,7 @@ type: application
 dependencies:
   - name: blueapi
     version: "0.1.0"
-    repository: "oci://ghcr.io/diamondlightsource/charts"
+    repository: "https://github.com/epics-containers/p49-services/tree/fix-uv-cache-dir/services/p49-blueapi/charts"
 
   - name: oauth2-proxy
     alias: oauth2
