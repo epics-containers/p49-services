@@ -3,7 +3,7 @@ entries:
   blueapi:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2025-12-16T11:48:02.645917982Z"
+    created: "2025-12-16T12:01:42.476218523Z"
     description: A Helm chart deploying a worker pod that runs Bluesky plans
     digest: 5eb4ab0ac3deaf570af429910285c13ef5bdebcfcf8463ae748cdc30770d43db
     home: https://github.com/DiamondLightSource/blueapi
@@ -22,7 +22,7 @@ entries:
               url: https://github.com/oauth2-proxy/manifests/pull/346
     apiVersion: v2
     appVersion: 7.12.0
-    created: "2025-12-16T11:48:02.650316936Z"
+    created: "2025-12-16T12:01:42.478410495Z"
     dependencies:
     - alias: redis
       condition: redis.enabled
@@ -56,4 +56,4 @@ entries:
     urls:
     - oauth2-proxy-8.2.1.tgz
     version: 8.2.1
-generated: "2025-12-16T11:48:02.636624454Z"
+generated: "2025-12-16T12:01:42.475585433Z"
