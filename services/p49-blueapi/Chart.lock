@@ -1,7 +1,7 @@
 dependencies:
 - name: blueapi
   repository: file:///home/danielfernandes/Programming/blueapi/helm/blueapi
-  version: 0.1.0
+  version: 1.11.2
 - name: oauth2-proxy
   repository: https://oauth2-proxy.github.io/manifests
   version: 8.2.1
