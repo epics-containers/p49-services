@@ -1,4 +1,7 @@
 blueapi:
+  securityContext:
+    runAsUser: 37889
+    runAsGroup: 37889
   image:
     tag: 1.11.2
   hostNetwork: false
