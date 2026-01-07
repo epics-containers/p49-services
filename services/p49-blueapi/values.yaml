@@ -1,4 +1,7 @@
 blueapi:
+  securityContext:
+    runAsUser: 37889
+    runAsGroup: 37889
   hostNetwork: false
   ingress:
     enabled: false
