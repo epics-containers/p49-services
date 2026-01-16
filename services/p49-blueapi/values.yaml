@@ -1,6 +1,6 @@
 blueapi:
   image:
-    tag: 1.11.2
+    tag: 1.11.3
   debug:
     enabled: true
   hostNetwork: false
