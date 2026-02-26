@@ -33,8 +33,7 @@ blueapi:
         host: http://opentelemetry-collector.tracing
   
   unmountedPVCs: 
-    - name: p49-blueapi-scratch-1.12.0
-      size: 1Gi
+
 
   worker:
     env:
