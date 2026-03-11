@@ -57,8 +57,8 @@ tiled:
           #
           # separately.
           init_if_not_exists: true
-  nodeSelector:
-    kubernetes.io/hostname: bl49p-ea-serv-01.diamond.ac.uk
+  # nodeSelector:
+  #   kubernetes.io/hostname: bl49p-ea-serv-01.diamond.ac.uk
   ingress:
     enabled: false
     className: "nginx"
