@@ -1,7 +1,7 @@
 blueapi:
   image:
-  # -- To use a container image that extends the blueapi one, set it here
-  repository: ghcr.io/neilsmithdls/blueapi
+    # -- To use a container image that extends the blueapi one, set it here
+    repository: ghcr.io/neilsmithdls/blueapi
   debug:
     enabled: true
   hostNetwork: false
