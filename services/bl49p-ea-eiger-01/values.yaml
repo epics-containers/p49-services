@@ -1,35 +1,36 @@
+# yaml-language-server: $schema=https://github.com/epics-containers/ec-helm-charts/releases/download/3.4.4/ioc-instance.schema.json#/$defs/service
 ioc-instance:
   image: ghcr.io/hyperrealist/fastcs-eiger:0.4.1b4002
   args:
     - stdio-expose --ptty --stdin --ctrl-d 'python -Xfrozen_modules=off -m debugpy --listen 0.0.0.0:5678 --wait-for-client /app/.venv/bin/fastcs-eiger ioc {{ .Values.pvPrefix }} --ip {{ .Values.detectorIp }} --port 80 --odin-ip {{ .Values.detectorName }}-odin-server --odin-port 8888'
 
-  livenessExecutable: null
-  preStopExecutable: null
+  # livenessExecutable: null
+  # preStopExecutable: null
 
-  env:
-    - name: PYTHONPATH
-      value: "/deploy/"
-    - name: DEBUG_MODE
-      value: "hello"
+  # env:
+  #   - name: PYTHONPATH
+  #     value: "/deploy/"
+  #   - name: DEBUG_MODE
+  #     value: "hello"
 
-  volumeMounts:
-    - name: home
-      # Keep the existing config mount and add the home mount
-      mountPath: /home/user
+  # volumeMounts:
+  #   - name: home
+  #     # Keep the existing config mount and add the home mount
+  #     mountPath: /home/user
 
-  volumes:
-    - name: home
-      # Add writable /home for VSCode Remote server installation
-      emptyDir:
-        sizeLimit: 1000Mi
+  # volumes:
+  #   - name: home
+  #     # Add writable /home for VSCode Remote server installation
+  #     emptyDir:
+  #       sizeLimit: 1000Mi
 
-  resources:
-    limits:
-      cpu: "1.5"
-      memory: 3.5Gi
-    requests:
-      cpu: "200m"
-      memory: 400Mi
+  # resources:
+  #   limits:
+  #     cpu: "1.5"
+  #     memory: 3.5Gi
+  #   requests:
+  #     cpu: "200m"
+  #     memory: 400Mi
 # odin-eiger:
 #   pvPrefix: BL15J-EA-EIGER-01
 #   ioc-instance:
