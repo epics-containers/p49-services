@@ -66,8 +66,8 @@ odin-eiger:
       value: "cs05r"
       effect: "NoSchedule"
 
-  dataVolume:
-    hostPath: /dls/i15-1/data
+  # dataVolume:
+  #   hostPath: /dls/i15-1/data
 
   hostNetwork: false
 
