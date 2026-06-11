@@ -3,8 +3,14 @@ odin-eiger:
   ioc-instance:
     image: ghcr.io/hyperrealist/fastcs-eiger:0.4.1b4002
     iocConfig: /epics/ioc
+    command:
+      - bash
+      - -c
     args:
-      - stdio-expose --ptty --stdin --ctrl-d 'python -Xfrozen_modules=off -m debugpy --listen 0.0.0.0:5678 --wait-for-client /app/.venv/bin/fastcs-eiger ioc {{ .Values.pvPrefix }} --ip {{ .Values.detectorIp }} --port 80 --odin-ip {{ .Values.detectorName }}-odin-server --odin-port 8888'
+      - "stdio-expose --ptty --stdin --ctrl-d 'python -Xfrozen_modules=off -m debugpy
+        --listen 0.0.0.0:5678 --wait-for-client --configure-subProcess true
+        -m fastcs_eiger.__main__ ioc {{ .Values.pvPrefix }} --ip {{ .Values.detectorIp }}
+        --port 80 --odin-ip {{ .Values.detectorName }}-odin-server --odin-port 8888'"
 
     # don't use the ioc-instance livenesProbe, preStop which dont exist in fastcs image.
     livenessExecutable: null
