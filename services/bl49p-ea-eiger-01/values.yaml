@@ -1,93 +1,85 @@
-# yaml-language-server: $schema=https://github.com/epics-containers/ec-helm-charts/releases/download/3.4.4/ioc-instance.schema.json#/$defs/service
-ioc-instance:
-  image: ghcr.io/hyperrealist/fastcs-eiger:0.4.1b4002
-  args:
-    - stdio-expose --ptty --stdin --ctrl-d 'python -Xfrozen_modules=off -m debugpy --listen 0.0.0.0:5678 --wait-for-client /app/.venv/bin/fastcs-eiger ioc {{ .Values.pvPrefix }} --ip {{ .Values.detectorIp }} --port 80 --odin-ip {{ .Values.detectorName }}-odin-server --odin-port 8888'
+odin-eiger:
+  pvPrefix: BL15J-EA-EIGER-01
+  ioc-instance:
+    image: ghcr.io/hyperrealist/fastcs-eiger:0.4.1b4002
+    iocConfig: /epics/ioc
+    args:
+      - stdio-expose --ptty --stdin --ctrl-d 'python -Xfrozen_modules=off -m debugpy --listen 0.0.0.0:5678 --wait-for-client /app/.venv/bin/fastcs-eiger ioc {{ .Values.pvPrefix }} --ip {{ .Values.detectorIp }} --port 80 --odin-ip {{ .Values.detectorName }}-odin-server --odin-port 8888'
 
-  livenessExecutable: null
-  preStopExecutable: null
+    # don't use the ioc-instance livenesProbe, preStop which dont exist in fastcs image.
+    livenessExecutable: null
+    preStopExecutable: null
 
-  env:
-    - name: PYTHONPATH
-      value: "/deploy/"
-    - name: DEBUG_MODE
-      value: "hello"
+    hostNetwork: "true\n      dnsPolicy: ClusterFirstWithHostNet"
 
-  volumeMounts:
-    - name: home
-      # Keep the existing config mount and add the home mount
-      mountPath: /home/user
+    # securityContext:  # Adding this breaks the eiger pod!
+    #   runAsUser: 37626
+    #   runAsGroup: 37626
 
-  volumes:
-    - name: home
-      # Add writable /home for VSCode Remote server installation
-      emptyDir:
-        sizeLimit: 1000Mi
+    env:
+      - name: PYTHONPATH
+        value: "/deploy/"
+      - name: DEBUG_MODE
+        value: "hello"
 
-  resources:
+    volumeMounts:
+      - name: home
+        # Keep the existing config mount and add the home mount
+        mountPath: /home/user
+
+    volumes:
+      - name: home
+        # Add writable /home for VSCode Remote server installation
+        emptyDir:
+          sizeLimit: 1000Mi
+
+    resources:
+      limits:
+        cpu: "1.5"
+        memory: 3.5Gi
+      requests:
+        cpu: "200m"
+        memory: 400Mi
+
+    # dataVolume:       # Adding this also breaks the eiger pod!
+    #   hostPath: /dls/i15-1/data
+
+  image: ghcr.io/diamondlightsource/eiger-detector-runtime:1.18.0beta2
+  detectorName: eiger-01
+  odinDataCount: 4
+  detectorIp: i15-1-eiger01
+  sensorSizeX: 1028
+  sensorSizeY: 512
+  sensorSize: "500K"
+  # sharedMemorySize: 5000000000
+
+  nodeSelector:
+    kubernetes.io/hostname: cs05r-i15-k8s-serv-02.diamond.ac.uk
+
+  # securityContext:
+  #   runAsUser: 37626
+  #   runAsGroup: 37626
+
+  tolerations:
+    - key: "location"
+      operator: "Equal"
+      value: "cs05r"
+      effect: "NoSchedule"
+
+  # dataVolume:
+  #   hostPath: /dls/i15-1/data
+
+  hostNetwork: false
+
+  eigerFanResources:
     limits:
-      cpu: "1.5"
-      memory: 3.5Gi
+      cpu: 1000m
+      memory: 10Gi
     requests:
-      cpu: "200m"
-      memory: 400Mi
-# odin-eiger:
-#   pvPrefix: BL15J-EA-EIGER-01
-#   ioc-instance:
-#     image: ghcr.io/hyperrealist/fastcs-eiger:0.4.1b4002
-#     iocConfig: /epics/ioc
-#     args:
-#       - stdio-expose --ptty --stdin --ctrl-d 'python -Xfrozen_modules=off -m debugpy --listen 0.0.0.0:5678 --wait-for-client /app/.venv/bin/fastcs-eiger ioc {{ .Values.pvPrefix }} --ip {{ .Values.detectorIp }} --port 80 --odin-ip {{ .Values.detectorName }}-odin-server --odin-port 8888'
+      cpu: 1000m
+      memory: 10Gi
 
-#     # don't use the ioc-instance livenesProbe, preStop which dont exist in fastcs image.
-#     livenessExecutable: null
-#     preStopExecutable: null
-
-#     hostNetwork: "true\n      dnsPolicy: ClusterFirstWithHostNet"
-
-#     # securityContext:  # Adding this breaks the eiger pod!
-#     #   runAsUser: 37626
-#     #   runAsGroup: 37626
-
-#     # dataVolume:       # Adding this also breaks the eiger pod!
-#     #   hostPath: /dls/i15-1/data
-
-#   image: ghcr.io/diamondlightsource/eiger-detector-runtime:1.18.0beta2
-#   detectorName: eiger-01
-#   odinDataCount: 4
-#   detectorIp: i15-1-eiger01
-#   sensorSizeX: 1028
-#   sensorSizeY: 512
-#   sensorSize: "500K"
-#   # sharedMemorySize: 5000000000
-
-#   nodeSelector:
-#     kubernetes.io/hostname: cs05r-i15-k8s-serv-02.diamond.ac.uk
-
-#   # securityContext:
-#   #   runAsUser: 37626
-#   #   runAsGroup: 37626
-
-#   tolerations:
-#     - key: "location"
-#       operator: "Equal"
-#       value: "cs05r"
-#       effect: "NoSchedule"
-
-#   # dataVolume:
-#   #   hostPath: /dls/i15-1/data
-
-#   hostNetwork: false
-
-#   eigerFanResources:
-#     limits:
-#       cpu: 1000m
-#       memory: 10Gi
-#     requests:
-#       cpu: 1000m
-#       memory: 10Gi
-
-#   devShmSize: 10Gi
+  devShmSize: 10Gi
 
 global:
   enabled: true

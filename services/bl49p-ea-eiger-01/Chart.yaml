@@ -2,13 +2,8 @@
 apiVersion: v2
 name: ec-service
 version: 1.0.0
-
 type: application
-
 dependencies:
-  - name: ioc-instance
-    version: 5.2.4
-    repository: "oci://ghcr.io/epics-containers/charts"
-    import-values:
-      - child: ioc-instance
-        parent: ioc-instance
+  - name: odin-eiger
+    version: 0.4.0-beta7
+    repository: "oci://ghcr.io/diamondlightsource"
