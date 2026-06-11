@@ -56,9 +56,9 @@ odin-eiger:
   nodeSelector:
     kubernetes.io/hostname: cs05r-i15-k8s-serv-02.diamond.ac.uk
 
-  securityContext:
-    runAsUser: 37626
-    runAsGroup: 37626
+  # securityContext:
+  #   runAsUser: 37626
+  #   runAsGroup: 37626
 
   tolerations:
     - key: "location"
