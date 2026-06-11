@@ -9,8 +9,8 @@ odin-eiger:
     args:
       - "stdio-expose --ptty --stdin --ctrl-d 'python -Xfrozen_modules=off -m debugpy
         --listen 0.0.0.0:5678 --wait-for-client --configure-subProcess true
-        -m fastcs_eiger.__main__ ioc {{ .Values.pvPrefix }} --ip {{ .Values.detectorIp }}
-        --port 80 --odin-ip {{ .Values.detectorName }}-odin-server --odin-port 8888'"
+        -m fastcs_eiger.__main__ ioc BL49P-EA-EIGER-01 --ip i15-1-eiger01
+        --port 80 --odin-ip eiger-01-odin-server --odin-port 8888'"
 
     # don't use the ioc-instance livenesProbe, preStop which dont exist in fastcs image.
     livenessExecutable: null
