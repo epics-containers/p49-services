@@ -89,5 +89,5 @@ ioc-instance:
 
 #   devShmSize: 10Gi
 
-# global:
-#   enabled: true
+global:
+  enabled: true
