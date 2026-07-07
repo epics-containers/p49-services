@@ -1,7 +1,7 @@
 blueapi:
   image:
     repository: ghcr.io/dan-fernandes/blueapi
-    tag: "1.12.0"
+    tag: "1.12.1"
   debug:
     enabled: true
   hostNetwork: false
