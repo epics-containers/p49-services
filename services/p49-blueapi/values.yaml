@@ -87,6 +87,19 @@ blueapi:
     persistentVolume:
       enabled: true
 
+  nodeSelector:
+    beamline: p49
+
+  tolerations:
+    - key: beamline
+      operator: Equal
+      value: p49
+      effect: NoSchedule
+    - key: nodetype
+      operator: Equal
+      value: training-rig
+      effect: NoSchedule
+
 oauth2:
   proxyVarsAsSecrets: false
   extraEnv:
