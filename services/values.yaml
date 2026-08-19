@@ -20,7 +20,7 @@ shared: &shared
     # runAsGroup: 37988
 
   nodeSelector:
-    beamline: bl49p
+    beamline: p49
 
   tolerations:
     - key: beamline

@@ -20,7 +20,7 @@ service_ip: 172.23.168.211
 # add affinity and tolerances as required below. Delete these if not required
 
 nodeSelector:
-  beamline: bl49p
+  beamline: p49
 
 tolerations:
   - key: beamline

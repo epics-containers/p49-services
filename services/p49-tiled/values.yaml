@@ -75,7 +75,7 @@ tiled:
       memory: 2Gi
 
   nodeSelector:
-    beamline: bl49p
+    beamline: p49
 
   tolerations:
     - key: beamline

@@ -11,7 +11,7 @@ nexus-file-converter:
         name: p49
 
   nodeSelector:
-    beamline: bl49p
+    beamline: p49
 
   tolerations:
     - key: beamline
