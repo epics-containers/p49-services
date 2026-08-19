@@ -11,27 +11,28 @@ nexus-file-converter:
         name: p49
 
   nodeSelector:
-    kubernetes.io/hostname: bl49p-ea-serv-01.diamond.ac.uk
+    beamline: bl49p
+
   tolerations:
+    - key: beamline
+      operator: Equal
+      value: p49
+      effect: NoSchedule
     - key: nodetype
       operator: Equal
       value: training-rig
       effect: NoSchedule
-    - key: beamline
-      operator: Equal
-      value: bl49p
-      effect: NoSchedule
 
   volumes:
-  - name: nexus-data
-    hostPath:
-      path: /exports/mybeamline/data/
-      type: DirectoryOrCreate
+    - name: nexus-data
+      hostPath:
+        path: /exports/mybeamline/data/
+        type: DirectoryOrCreate
 
   volumeMounts:
-  - name: nexus-data
-    mountPath: /exports/mybeamline/data/
-    mountPropagation: HostToContainer
+    - name: nexus-data
+      mountPath: /exports/mybeamline/data/
+      mountPropagation: HostToContainer
 
   application:
     server:
@@ -45,10 +46,9 @@ nexus-file-converter:
         password: guest
     files:
       output:
-        
         directory:
-          staticDirectory: ""  # explicitly empty, get from StartDocument metadata
-        
+          staticDirectory: "" # explicitly empty, get from StartDocument metadata
+
         devices:
           types:
             det: NX_DETECTOR
@@ -56,5 +56,5 @@ nexus-file-converter:
             sample_stage.x: NX_POSITIONER
             sample_stage.theta: NX_POSITIONER
   securityContext:
-    runAsUser: 37889  # p49detector
+    runAsUser: 37889 # p49detector
     runAsGroup: 37889

@@ -1,19 +1,19 @@
 tiled:
   extraEnvVars:
-  - name: USER_NAME
-    valueFrom:
-      secretKeyRef:
-        name: postgres-secret
-        key: USERDB_USER
-  
-  - name: POSTGRESQL_PASSWORD
-    valueFrom:
-      secretKeyRef:
-        name: postgres-secret
-        key: ADMIN_PASS
-  
-  - name: PYTHONPATH
-    value: /deploy/
+    - name: USER_NAME
+      valueFrom:
+        secretKeyRef:
+          name: postgres-secret
+          key: USERDB_USER
+
+    - name: POSTGRESQL_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: postgres-secret
+          key: ADMIN_PASS
+
+    - name: PYTHONPATH
+      value: /deploy/
   image:
     tag: 0.2.7
   config:
@@ -24,14 +24,14 @@ tiled:
       secret_keys:
         - SECRET
       providers:
-      - provider: keycloak_oidc
-        authenticator: tiled.authenticators:ProxiedOIDCAuthenticator
-        args:
-          audience: account
-          client_id: p49-tiled
-          device_flow_client_id: tiled-cli
-          well_known_uri: "https://identity.diamond.ac.uk/realms/dls/.well-known/openid-configuration"
-          confirmation_message: "You have logged in with identity-test.diamond.ac.uk as {id}."
+        - provider: keycloak_oidc
+          authenticator: tiled.authenticators:ProxiedOIDCAuthenticator
+          args:
+            audience: account
+            client_id: p49-tiled
+            device_flow_client_id: tiled-cli
+            well_known_uri: "https://identity.diamond.ac.uk/realms/dls/.well-known/openid-configuration"
+            confirmation_message: "You have logged in with identity-test.diamond.ac.uk as {id}."
     access_control:
       access_policy: "access_policy.dls:DiamondOpenPolicyAgentAuthorizationPolicy"
       args:
@@ -57,8 +57,7 @@ tiled:
           #
           # separately.
           init_if_not_exists: true
-  # nodeSelector:
-  #   kubernetes.io/hostname: bl49p-ea-serv-01.diamond.ac.uk
+
   ingress:
     enabled: false
     className: "nginx"
@@ -74,39 +73,44 @@ tiled:
     requests:
       cpu: 500m
       memory: 2Gi
+
+  nodeSelector:
+    beamline: bl49p
+
   tolerations:
-  - effect: NoSchedule
-    key: nodetype
-    operator: Equal
-    value: training-rig
-  - effect: NoSchedule
-    key: beamline
-    operator: Equal
-    value: bl46p
+    - key: beamline
+      operator: Equal
+      value: p49
+      effect: NoSchedule
+    - key: nodetype
+      operator: Equal
+      value: training-rig
+      effect: NoSchedule
+
   volumeMounts:
-  - mountPath: /deploy/config
-    name: config
-    readOnly: true
-  # - mountPath: /exports/mybeamline
-  #   mountPropagation: HostToContainer
-  #   name: data
-  # - name: storage
-  #   mountPath: "/storage"
+    - mountPath: /deploy/config
+      name: config
+      readOnly: true
+    # - mountPath: /exports/mybeamline
+    #   mountPropagation: HostToContainer
+    #   name: data
+    # - name: storage
+    #   mountPath: "/storage"
     # readOnly: false
-  - name: access-policy
-    mountPath: /deploy/access_policy
-    readOnly: true
+    - name: access-policy
+      mountPath: /deploy/access_policy
+      readOnly: true
   volumes:
-  # - hostPath:
-  #     path: /exports/mybeamline
-  #     type: DirectoryOrCreate
-  #   name: data
-  # - name: storage
-  #   persistentVolumeClaim:
-  #     claimName: tiled-storage-pvc
-  - name: access-policy
-    configMap:
-      name: tiled-access-policy
+    # - hostPath:
+    #     path: /exports/mybeamline
+    #     type: DirectoryOrCreate
+    #   name: data
+    # - name: storage
+    #   persistentVolumeClaim:
+    #     claimName: tiled-storage-pvc
+    - name: access-policy
+      configMap:
+        name: tiled-access-policy
 
 glazed:
   image:
@@ -180,56 +184,55 @@ oauth2:
       injectRequestHeaders:
         - name: Authorization
           values:
-            - claimSource: 
+            - claimSource:
                 claim: access_token
                 prefix: "Bearer "
 
-
 ## Postgres
 postgres:
-    replicaCount: 1
+  replicaCount: 1
 
-    ## Use Kubernetes Deployment instead of StatefulSet
-    useDeployment: true
+  ## Use Kubernetes Deployment instead of StatefulSet
+  useDeployment: true
 
-    ## Database and user (user is optional, but recommended, as 'postgres' would be the only user otherwise)
-    userDatabase:
-      ## Optional existing secret with database name, user and password
-      existingSecret: postgres-secret
-      name: 
-        ## Name of the user database
-        value: tiled-db
-      password:
-        ## Password of the database user
-        secretKey: USER_PASS
-      user:
-        ## Database user with full access rights
-        value: tiled
+  ## Database and user (user is optional, but recommended, as 'postgres' would be the only user otherwise)
+  userDatabase:
+    ## Optional existing secret with database name, user and password
+    existingSecret: postgres-secret
+    name:
+      ## Name of the user database
+      value: tiled-db
+    password:
+      ## Password of the database user
+      secretKey: USER_PASS
+    user:
+      ## Database user with full access rights
+      value: tiled
 
-    ## Database configuration
-    settings:
-      ## Optional existing secret for the Postgres superuser
-      existingSecret: postgres-secret
-      superuserPassword:
-        secretKey: ADMIN_PASS
-      ## Postgres database authentication method
-      ## For example: "md5"
-      authMethod: scram-sha-256
-      ## Optional init database arguments
-      initDbArgs: "--auth-local=scram-sha-256 --auth=scram-sha-256"
+  ## Database configuration
+  settings:
+    ## Optional existing secret for the Postgres superuser
+    existingSecret: postgres-secret
+    superuserPassword:
+      secretKey: ADMIN_PASS
+    ## Postgres database authentication method
+    ## For example: "md5"
+    authMethod: scram-sha-256
+    ## Optional init database arguments
+    initDbArgs: "--auth-local=scram-sha-256 --auth=scram-sha-256"
 
-    storage:
-      volumeName: tiled-db-postgres 
-      keepPvc: true
-      className: db-nvme-storage
-      requestedSize: 8Gi
-      accessModes:
-        - ReadWriteOnce
+  storage:
+    volumeName: tiled-db-postgres
+    keepPvc: true
+    className: db-nvme-storage
+    requestedSize: 8Gi
+    accessModes:
+      - ReadWriteOnce
 
-    resources:
-      limits:
-        cpu: 2
-        memory: 2G
-      requests:
-        cpu: "0.5"
-        memory: 1G
+  resources:
+    limits:
+      cpu: 2
+      memory: 2G
+    requests:
+      cpu: "0.5"
+      memory: 1G
