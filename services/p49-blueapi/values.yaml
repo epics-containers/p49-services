@@ -1,4 +1,7 @@
 blueapi:
+  image:
+    repository: ghcr.io/dan-fernandes/blueapi
+    tag: "1.12.7"
   debug:
     enabled: true
   hostNetwork: false
