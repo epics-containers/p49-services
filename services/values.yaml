@@ -19,37 +19,6 @@ shared: &shared
     # runAsUser: 37988
     # runAsGroup: 37988
 
-  # affinity chooses which servers to run on
-  # Accelerator must set this for CIAs, Beamlines don't need it
-  affinity: {}
-    # nodeAffinity:
-    #   requiredDuringSchedulingIgnoredDuringExecution:
-    #     nodeSelectorTerms:
-    #       - matchExpressions:
-    #           - key: location
-    #             operator: In
-    #             values:
-    #               - sr03c
-
-  # tolerations allow us to run on a tainted server
-  # Accelerator must set this for CIAs, Beamlines don't need it
-  tolerations: []
-    # - key: location
-    #   operator: Equal
-    #   value: sr03c
-    #   effect: NoSchedule
-
-# shared settings for all ibek IOCs using the ioc-instance helm chart
-ioc-instance:
-  # useHostNetwork - use host network for IOC - required for Channel Access
-  # to work outside of the cluster
-  hostNetwork: true
-
-  # affinity and tolerations to get the right nodes on pollux
-  securityContext:
-    runAsUser: 37889
-    runAsGroup: 37889
-
   nodeSelector:
     beamline: bl49p
 
@@ -62,6 +31,12 @@ ioc-instance:
       operator: Equal
       value: training-rig
       effect: NoSchedule
+
+# shared settings for all ibek IOCs using the ioc-instance helm chart
+ioc-instance:
+  # useHostNetwork - use host network for IOC - required for Channel Access
+  # to work outside of the cluster
+  hostNetwork: true
   <<: *shared
 
 # shared setting for all legacy IOCs using the dev-c7 helm chart
