@@ -57,9 +57,11 @@ ioc-instance:
     - key: beamline
       operator: Equal
       value: p49
+      effect: NoSchedule
     - key: nodetype
       operator: Equal
       value: training-rig
+      effect: NoSchedule
   <<: *shared
 
 # shared setting for all legacy IOCs using the dev-c7 helm chart
