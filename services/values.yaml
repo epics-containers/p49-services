@@ -53,16 +53,6 @@ ioc-instance:
   nodeSelector:
     beamline: bl49p
 
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-              - key: beamline
-                operator: In
-                values:
-                  - bl49p
-
   tolerations:
     - key: beamline
       operator: Equal
