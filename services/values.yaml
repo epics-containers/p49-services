@@ -19,7 +19,6 @@ shared: &shared
     # runAsUser: 37988
     # runAsGroup: 37988
 
-
   # affinity chooses which servers to run on
   # Accelerator must set this for CIAs, Beamlines don't need it
   affinity: {}
@@ -51,6 +50,9 @@ ioc-instance:
     runAsUser: 37889
     runAsGroup: 37889
 
+  nodeSelector:
+    beamline: bl49p
+
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -64,16 +66,10 @@ ioc-instance:
   tolerations:
     - key: beamline
       operator: Equal
-      value: bl49p
-      effect: NoSchedule
-    - key: location
-      operator: Equal
-      value: bl49p
-      effect: NoSchedule
+      value: p49
     - key: nodetype
       operator: Equal
       value: training-rig
-      effect: NoSchedule
   <<: *shared
 
 # shared setting for all legacy IOCs using the dev-c7 helm chart
