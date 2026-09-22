@@ -37,6 +37,9 @@ blueapi:
       server:
         host: http://opentelemetry-collector.tracing
 
+  metrics:
+    enabled: true
+
   worker:
     env:
       metadata:
