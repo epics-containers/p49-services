@@ -37,9 +37,6 @@ blueapi:
       server:
         host: http://opentelemetry-collector.tracing
 
-  metrics:
-    enabled: true
-
   worker:
     env:
       metadata:
@@ -61,6 +58,8 @@ blueapi:
       level: "INFO"
       graylog:
         enabled: true
+    metrics:
+      enabled: true
 
     oidc:
       well_known_url: "https://identity.diamond.ac.uk/realms/dls/.well-known/openid-configuration"
